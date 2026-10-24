@@ -125,7 +125,7 @@ export async function signup(_prev: ActionState, formData: FormData): Promise<Ac
 
   const origin = (await headers()).get("origin") ?? "";
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -136,6 +136,9 @@ export async function signup(_prev: ActionState, formData: FormData): Promise<Ac
   if (error) {
     return { error: "가입을 완료하지 못했습니다. 입력값을 확인하고 다시 시도해 주세요." };
   }
+
+  // 이메일 인증(Confirm email)이 꺼져 있으면 바로 세션이 생긴다
+  if (data.session) redirect("/");
 
   return {
     message: "인증 메일을 보냈습니다. 메일의 링크를 눌러 가입을 완료한 뒤 로그인해 주세요.",

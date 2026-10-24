@@ -3,7 +3,8 @@ import { LoginForm } from "@/components/auth-forms";
 
 const NOTICES: Record<string, string> = {
   inactive: "비활성화된 계정입니다. 재가입 후 이용해 주세요.",
-  confirm: "이메일 인증 링크가 만료되었거나 올바르지 않습니다. 다시 가입해 주세요.",
+  // PKCE 방식은 다른 브라우저에서 링크를 열면 세션 교환만 실패하고 인증 자체는 끝났을 수 있다
+  confirm: "인증 링크 처리 중 문제가 생겼습니다. 먼저 로그인해 보시고, 안 되면 다시 가입해 주세요.",
 };
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
